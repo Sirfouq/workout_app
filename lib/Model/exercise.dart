@@ -6,7 +6,7 @@ ExerciseGen({this.exercise});
 
 factory ExerciseGen.fromJson(Map<String,dynamic>json){
   var list = json['exercises'] as List;
-  List<Exercise> exercise_list = list.map((exercise) => Exercise.fromJson(exercise)).toList(growable: true);
+  List<Exercise> exercise_list = list.map((exercise) => Exercise.fromJson(exercise)).toList();
   return ExerciseGen(
     exercise: exercise_list
   );
