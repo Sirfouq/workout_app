@@ -1,7 +1,9 @@
-import 'dart:convert';
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'Model/exercise.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
+import 'workoutExList.dart';
+import 'util/credit_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,17 +16,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
       home: const HomePage(title: 'Flutter Demo Home Page'),
@@ -32,82 +26,48 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final String title;
+  
   const HomePage({super.key, required this.title});
+  
+  @override
+  State<HomePage> createState() => _HomePageState();
+
+}  
+  
+  class _HomePageState extends State<HomePage>{
+    final _controller = PageController();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: MainList(),
-    );
-  }
-}
-
-class MainList extends StatefulWidget {
-  const MainList({super.key});
-
-  @override
-  State<MainList> createState() => _MainListState();
-}
-
-Future<String> _loadData() async {
-  return await rootBundle.loadString('data/exercises.json');
-}
-
-class _MainListState extends State<MainList> {
-  ExerciseGen exerciseGen = ExerciseGen();
-
-  bool isLoading = true;
-
-  Future loadData() async {
-    String jsonString = await _loadData();
-    final jsonresponse = json.decode(jsonString);
-    exerciseGen = ExerciseGen.fromJson(jsonresponse);
-    
-    setState(() {
-      
-      isLoading = false;
-    });
-    //print('${exerciseGen.exercise![0].level} ${exerciseGen.exercise![78].instructions}');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    loadData();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
-    return Container(
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.only(top: 20),
-        shrinkWrap: false,
-        itemCount: exerciseGen.exercise?.length,
-        itemBuilder: (context, index) => ListTile(
-          leading: CircleAvatar(
-            child: Text('$index'),
-          ),
-          subtitle: Text('${exerciseGen.exercise?[index].name}'),
+    return Scaffold(
+      backgroundColor: Colors.grey[300],
+      body: SafeArea(
+        child: Column(
+          children: [
+            SizedBox(height: 25),
+            SizedBox(
+              height: 200,
+              child: PageView(
+                controller: _controller,
+                clipBehavior:Clip.hardEdge,
+                children: [
+                CreditCard(),
+                CreditCard(),
+                CreditCard()
+                ],
+                
+                
+              ),
+            ),
+            SizedBox(height: 10,),
+            SmoothPageIndicator(controller: _controller, count: 3)
+            
+          ],
         ),
       ),
     );
-
-    // return ListView.builder(
-    //     shrinkWrap: true,
-    //     itemCount: exerciseGen.exercise?.length.compareTo(0),
-    //     itemBuilder: ((context, index) {
-    //       return Card(
-    //         child: ListTile(
-    //             title: Text('$index'),
-    //             subtitle: Text('${exerciseGen.exercise?[index].name}')),
-    //       );
-    //     }));
   }
 }
+
