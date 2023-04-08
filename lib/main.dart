@@ -1,8 +1,8 @@
+// main.dart
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import 'workoutExList.dart';
+import 'package:workout_app/util/horizontal_menu.dart';
 import 'util/credit_card.dart';
 
 void main() {
@@ -10,9 +10,8 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp();
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,17 +27,14 @@ class MyApp extends StatelessWidget {
 
 class HomePage extends StatefulWidget {
   final String title;
-  
-  const HomePage({super.key, required this.title});
-  
+
+  const HomePage({required this.title});
+
   @override
   State<HomePage> createState() => _HomePageState();
+}
 
-}  
-  
-  class _HomePageState extends State<HomePage>{
-    final _controller = PageController();
-
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,26 +44,19 @@ class HomePage extends StatefulWidget {
           children: [
             SizedBox(height: 25),
             SizedBox(
-              height: 200,
-              child: PageView(
-                controller: _controller,
-                clipBehavior:Clip.hardEdge,
-                children: [
-                CreditCard(),
-                CreditCard(),
-                CreditCard()
+              height: 200, // Adjust this value according to your needs.
+              child: HorizontalMenu(
+                items: [
+                  CreditCard( balance:08.45,date: '04/28', number: '*****8914',user: 'Georgios Kokkinos'),
+                  CreditCard(balance:1444.45,date: '04/28', number: '*****9120',user: 'Georgios Kokkinos'),
+                  CreditCard( balance:123.45,date: '04/28', number: '*****7734',user: 'Georgios Kokkinos'),
                 ],
-                
-                
               ),
             ),
-            SizedBox(height: 10,),
-            SmoothPageIndicator(controller: _controller, count: 3)
-            
+            SizedBox(height: 10),
           ],
         ),
       ),
     );
   }
 }
-

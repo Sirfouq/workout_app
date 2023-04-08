@@ -3,7 +3,12 @@
 import 'package:flutter/material.dart';
 
 class CreditCard extends StatelessWidget {
-  const CreditCard({super.key});
+  const CreditCard({super.key, required this.balance, required this.date, required this.number, required this.user});
+  final double balance;
+  final String date;
+  final String number;
+  final String user;
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,15 +32,15 @@ class CreditCard extends StatelessWidget {
             height: 10,
           ),
           Text(
-            '\$4,244.20',
+            balance.toString(),
             style: TextStyle(color: Colors.white, fontSize: 28),
           ),
           SizedBox(height: 30),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('****8924',style: TextStyle(color: Colors.white,fontSize: 22),),
-              Text('06/26',style: TextStyle(color:Colors.white,fontSize: 22 ),)
+              Text(number,style: TextStyle(color: Colors.white,fontSize: 22),),
+              Text(date,style: TextStyle(color:Colors.white,fontSize: 22 ),)
             ],
           )
         ]),
