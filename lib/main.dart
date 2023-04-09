@@ -35,6 +35,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final controller = PageController(viewportFraction: 0.8,initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,8 +45,8 @@ class _HomePageState extends State<HomePage> {
           children: [
             SizedBox(height: 25),
             SizedBox(
-              height: 200, // Adjust this value according to your needs.
-              child: HorizontalMenu(
+              height: 250, // Adjust this value according to your needs.
+              child: HorizontalMenu(controller: controller,
                 items: [
                   CreditCard( balance:08.45,date: '04/28', number: '*****8914',user: 'Georgios Kokkinos'),
                   CreditCard(balance:1444.45,date: '04/28', number: '*****9120',user: 'Georgios Kokkinos'),
