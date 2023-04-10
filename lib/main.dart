@@ -35,10 +35,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final controller = PageController(viewportFraction: 0.8,initialPage: 0);
+  final controller = PageController(viewportFraction: 0.8, initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(),
+      appBar: AppBar(
+          leading: Builder(
+        builder: (context) => IconButton(
+            onPressed: () => Scaffold.of(context).openDrawer(),
+            icon: Icon(Icons.menu)),
+      )),
       backgroundColor: Colors.grey[300],
       body: SafeArea(
         child: Column(
@@ -46,11 +53,24 @@ class _HomePageState extends State<HomePage> {
             SizedBox(height: 25),
             SizedBox(
               height: 250, // Adjust this value according to your needs.
-              child: HorizontalMenu(controller: controller,
+              child: HorizontalMenu(
+                controller: controller,
                 items: [
-                  CreditCard( balance:08.45,date: '04/28', number: '*****8914',user: 'Georgios Kokkinos'),
-                  CreditCard(balance:1444.45,date: '04/28', number: '*****9120',user: 'Georgios Kokkinos'),
-                  CreditCard( balance:123.45,date: '04/28', number: '*****7734',user: 'Georgios Kokkinos'),
+                  CreditCard(
+                      balance: 08.45,
+                      date: '04/28',
+                      number: '*****8914',
+                      user: 'Georgios Kokkinos'),
+                  CreditCard(
+                      balance: 1444.45,
+                      date: '04/28',
+                      number: '*****9120',
+                      user: 'Georgios Kokkinos'),
+                  CreditCard(
+                      balance: 123.45,
+                      date: '04/28',
+                      number: '*****7734',
+                      user: 'Georgios Kokkinos'),
                 ],
               ),
             ),
